@@ -32,11 +32,11 @@ int PagedArray::getPage(int index) {
 void PagedArray::loadPage(int page, int newFrame) {
     if (currentPages[newFrame] != -1) {
         file.seekp(SIZE * currentPages[newFrame] * sizeof(int));
-        file.write((char*)frames[newFrame], SIZE * sizeof(int));
+        file.write((char *) frames[newFrame], SIZE * sizeof(int));
 
     }
     file.seekg(SIZE * page * sizeof(int));
-    file.read((char*)frames[newFrame], SIZE * sizeof(int));
+    file.read((char *) frames[newFrame], SIZE * sizeof(int));
     currentPages[newFrame] = page;
 }
 
@@ -46,6 +46,7 @@ int &PagedArray::operator[](int index) {
 
     for (int i = 0; i < maxFrame; ++i) {
         if (currentPages[i] == page) {
+            this->pageHit += 1;
             return frames[i][index % SIZE];
         }
     }
@@ -60,7 +61,7 @@ int &PagedArray::operator[](int index) {
         newFrame = rand() % 4;
     }
     loadPage(page, newFrame);
-
+    this->pageFault += 1;
     return frames[newFrame][index % SIZE];
 
 }

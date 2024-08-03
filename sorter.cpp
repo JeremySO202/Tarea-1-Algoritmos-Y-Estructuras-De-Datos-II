@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
             auto stop = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
             cout << "Tiempo de ejecución: " << duration.count() << " segundos" << endl;
+
             array.savePages();
         }
 
@@ -61,6 +62,23 @@ int main(int argc, char *argv[]) {
             }
             outputFile << array[i];
         }
+        string algT;
+        if (strcmp(alg, "QS") == 0)
+        {
+            algT = "Quick sort";
+        }
+
+
+
+        if (strcmp(alg, "IS") == 0) {
+            algT = "Insertion sort";
+        }
+        if (strcmp(alg, "BS") == 0) {
+            algT = "Bubble sort";
+        }
+        cout << "Se utilizo el algoritomo "<< algT << endl;
+        cout << "Cantidad de page fault" << array.pageFault << endl;
+        cout << "Cantidad de page hit" << array.pageHit << endl;
         array.file.close();
 
         outputFile.close();

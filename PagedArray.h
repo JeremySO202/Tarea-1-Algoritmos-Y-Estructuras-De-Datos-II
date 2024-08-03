@@ -12,6 +12,8 @@ class PagedArray {
 public:
     int SIZE = 16384; //tamano de pagina 64 KB
     int sizeFile;
+    int pageFault = 0;
+    int pageHit = 0;
 
     static const int maxFrame = 4;
 
