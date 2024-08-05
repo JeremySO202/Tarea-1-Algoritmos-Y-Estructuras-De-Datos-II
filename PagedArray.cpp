@@ -57,6 +57,7 @@ int &PagedArray::operator[](int index) {
             break;
         }
     }
+    srand(time(0));
     if (newFrame == -1) {
         newFrame = rand() % 4;
     }

@@ -37,6 +37,7 @@ int main(int argc, char* argv[]){
         }
         int *num = new int[1024]();
         int lastIndex = 0;
+        srand(time(0));
         for (int i = 0; i < maxSize; ++i) {
             num[i%1024] = rand();
             if (lastIndex != int(i/1024)){

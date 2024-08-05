@@ -6,6 +6,7 @@
 #define TAREA_1_PAGEDARRAY_H
 
 
+#include <fstream>
 
 class PagedArray {
 

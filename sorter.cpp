@@ -23,8 +23,8 @@ int main(int argc, char *argv[]) {
             alg = argv[i + 1];
         }
     }
-    fstream file(input, ios::in | ios::binary);
 
+    fstream file(input, ios::in | ios::binary);
 
     if (file.is_open()) {
         file.close();
@@ -43,15 +43,19 @@ int main(int argc, char *argv[]) {
 
             array.savePages();
         }
-
-
-
         if (strcmp(alg, "IS") == 0) {
-
-
+            auto start = std::chrono::high_resolution_clock::now();
+            insertionSort(array, array.sizeFile);
+            auto stop = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
+            cout << "Tiempo de ejecución: " << duration.count() << " segundos" << endl;
         }
         if (strcmp(alg, "BS") == 0) {
-
+            auto start = std::chrono::high_resolution_clock::now();
+            bubbleSort(array, array.sizeFile);
+            auto stop = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
+            cout << "Tiempo de ejecución: " << duration.count() << " segundos" << endl;
         }
 
         fstream outputFile(output + ".csv", ios::out | ios::trunc);
@@ -67,9 +71,6 @@ int main(int argc, char *argv[]) {
         {
             algT = "Quick sort";
         }
-
-
-
         if (strcmp(alg, "IS") == 0) {
             algT = "Insertion sort";
         }
