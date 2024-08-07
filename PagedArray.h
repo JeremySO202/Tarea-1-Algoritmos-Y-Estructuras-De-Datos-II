@@ -25,13 +25,15 @@ public:
     int currentPages[maxFrame];
 
     explicit PagedArray(std::string path);
+
     int &operator[](int);
+
     int getPage(int index);
+
     void loadPage(int page, int newFrame);
+
     void savePages();
 };
-
-
 
 
 #endif //TAREA_1_PAGEDARRAY_H

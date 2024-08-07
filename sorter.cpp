@@ -77,9 +77,10 @@ int main(int argc, char *argv[]) {
         if (strcmp(alg, "BS") == 0) {
             algT = "Bubble sort";
         }
+
         cout << "Se utilizo el algoritomo "<< algT << endl;
-        cout << "Cantidad de page fault" << array.pageFault << endl;
-        cout << "Cantidad de page hit" << array.pageHit << endl;
+        cout << "Cantidad de page fault: " << array.pageFault << endl;
+        cout << "Cantidad de page hit: " << array.pageHit << endl;
         array.file.close();
 
         outputFile.close();

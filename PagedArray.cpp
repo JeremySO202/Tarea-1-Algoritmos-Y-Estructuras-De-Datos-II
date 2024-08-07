@@ -7,6 +7,8 @@ using namespace std;
 
 PagedArray::PagedArray(string input) {
 
+    srand(time(0));
+
     this->file.open(input, ios::in | ios::out | ios::binary);
     this->file.seekg(0, ios::end);
     sizeFile = int(this->file.tellg()) / 4;
@@ -30,12 +32,13 @@ int PagedArray::getPage(int index) {
 }
 
 void PagedArray::loadPage(int page, int newFrame) {
-    if (currentPages[newFrame] != -1) {
-        file.seekp(SIZE * currentPages[newFrame] * sizeof(int));
-        file.write((char *) frames[newFrame], SIZE * sizeof(int));
 
+    if (currentPages[newFrame] != -1) {
+        file.seekp(SIZE * currentPages[newFrame] * sizeof(int) + ios::beg);
+        file.write((char *) frames[newFrame], SIZE * sizeof(int));
     }
-    file.seekg(SIZE * page * sizeof(int));
+
+    file.seekg(SIZE * page * sizeof(int) + ios::beg);
     file.read((char *) frames[newFrame], SIZE * sizeof(int));
     currentPages[newFrame] = page;
 }
@@ -50,6 +53,7 @@ int &PagedArray::operator[](int index) {
             return frames[i][index % SIZE];
         }
     }
+
     int newFrame = -1;
     for (int i = 0; i < maxFrame; ++i) {
         if (currentPages[i] == -1) {
@@ -57,10 +61,11 @@ int &PagedArray::operator[](int index) {
             break;
         }
     }
-    srand(time(0));
+
     if (newFrame == -1) {
-        newFrame = rand() % 4;
+        newFrame = rand() % 3;
     }
+
     loadPage(page, newFrame);
     this->pageFault += 1;
     return frames[newFrame][index % SIZE];
@@ -71,7 +76,7 @@ void PagedArray::savePages() {
 
     for (int i = 0; i < maxFrame; ++i) {
         if (currentPages[i] != -1) {
-            file.seekp(SIZE * currentPages[i]);
+            file.seekp(SIZE * currentPages[i] * sizeof(int) + ios::beg);
             file.write((char *) frames[i], SIZE * sizeof(int));
         }
     }
